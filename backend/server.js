@@ -19,7 +19,17 @@ connectDB();
 const app = express();
 
 // Security middleware
-app.use(helmet());
+app.use(helmet({
+  crossOriginEmbedderPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+}));
 
 // CORS configuration dynamique
 const getAllowedOrigins = () => {
@@ -34,7 +44,9 @@ const getAllowedOrigins = () => {
     origins.push(process.env.CORS_ORIGIN);
   }
   if (process.env.CLIENT_URL) {
-    origins.push(process.env.CLIENT_URL);
+    // Nettoyer l'URL pour éviter les problèmes de trailing slash
+    const cleanUrl = process.env.CLIENT_URL.replace(/\/$/, '');
+    origins.push(cleanUrl);
   }
   
   return origins;
@@ -44,21 +56,29 @@ const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = getAllowedOrigins();
     
-    // Permettre les requêtes sans origin (ex: Postman, mobile apps)
+    // Permettre les requêtes sans origin (ex: Postman, mobile apps, preflight)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Vérifier si l'origin est dans la liste autorisée
+    if (allowedOrigins.includes(origin)) {
+      console.log('✅ CORS allowed origin:', origin);
       callback(null, true);
     } else {
       console.log('🚫 CORS blocked origin:', origin);
+      console.log('📋 Allowed origins:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
   optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options('*', cors(corsOptions));
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
