@@ -14,11 +14,12 @@ const setTokenCookie = (res, token) => {
   const options = {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 jours
     httpOnly: true, // Empêche l'accès via JavaScript côté client
-    secure: process.env.NODE_ENV === 'production', // HTTPS en production
-    sameSite: 'strict', // Protection CSRF
+    secure: true, // Requis pour sameSite: 'none' en production
+    sameSite: 'none', // Nécessaire pour les requêtes cross-origin avec credentials
     path: '/'
   };
   
+  console.log('🍪 Setting cookie with options:', options);
   res.cookie('token', token, options);
 };
 

@@ -3,6 +3,12 @@ const User = require('../models/User');
 
 const auth = async (req, res, next) => {
   try {
+    console.log('🔍 Auth middleware - Request details:');
+    console.log('  - Cookies:', req.cookies);
+    console.log('  - Authorization header:', req.header('Authorization'));
+    console.log('  - Origin:', req.header('Origin'));
+    console.log('  - User-Agent:', req.header('User-Agent'));
+    
     // Vérifier d'abord les cookies, puis l'Authorization header
     let token = req.cookies.token;
     
@@ -10,7 +16,10 @@ const auth = async (req, res, next) => {
       token = req.header('Authorization')?.replace('Bearer ', '');
     }
     
+    console.log('🔍 Token found:', !!token);
+    
     if (!token) {
+      console.log('❌ No token found in cookies or Authorization header');
       return res.status(401).json({ 
         success: false, 
         message: 'Accès refusé. Token manquant.' 
