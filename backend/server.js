@@ -21,12 +21,43 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration
+// CORS configuration dynamique
+const getAllowedOrigins = () => {
+  const origins = [
+    'http://localhost:5173',  // Développement local
+    'http://localhost:3000',  // Alternative locale
+    'https://importf.onrender.com',  // Frontend déployé
+  ];
+  
+  // Ajouter les origines depuis les variables d'environnement
+  if (process.env.CORS_ORIGIN) {
+    origins.push(process.env.CORS_ORIGIN);
+  }
+  if (process.env.CLIENT_URL) {
+    origins.push(process.env.CLIENT_URL);
+  }
+  
+  return origins;
+};
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: function (origin, callback) {
+    const allowedOrigins = getAllowedOrigins();
+    
+    // Permettre les requêtes sans origin (ex: Postman, mobile apps)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('🚫 CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
 
 // Logging middleware

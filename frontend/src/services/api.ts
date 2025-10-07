@@ -1,6 +1,31 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : 'http://localhost:5000/api'
+// Configuration automatique de l'URL de l'API
+const getApiBaseUrl = () => {
+  // Si on est en production (Render), utiliser l'URL de production
+  if (import.meta.env.PROD) {
+    return 'https://microimport-backend.onrender.com/api'
+  }
+  
+  // Si une variable d'environnement est définie, l'utiliser
+  if (import.meta.env.VITE_API_URL) {
+    return `${import.meta.env.VITE_API_URL}/api`
+  }
+  
+  // Par défaut, utiliser localhost pour le développement
+  return 'http://localhost:5000/api'
+}
+
+const API_BASE_URL = getApiBaseUrl()
+
+// Log pour debug (seulement en développement)
+if (import.meta.env.DEV) {
+  console.log('🔧 Configuration API:', {
+    environment: import.meta.env.MODE,
+    apiUrl: API_BASE_URL,
+    viteApiUrl: import.meta.env.VITE_API_URL
+  })
+}
 
 // Types
 export interface User {

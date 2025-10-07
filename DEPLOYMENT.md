@@ -54,7 +54,7 @@ NODE_ENV=production
 PORT=10000
 MONGODB_URI=mongodb+srv://microimport-user:<password>@cluster0.xxxxx.mongodb.net/microimport?retryWrites=true&w=majority
 JWT_SECRET=votre_secret_jwt_tres_long_et_securise
-CORS_ORIGIN=https://microimport-frontend.onrender.com
+CORS_ORIGIN=https://importf.onrender.com
 ```
 
 ### 2.4 Déployer
@@ -103,7 +103,7 @@ VITE_API_URL=https://microimport-backend.onrender.com
 
 ## URLs finales
 
-- **Frontend**: `https://microimport-frontend.onrender.com`
+- **Frontend**: `https://importf.onrender.com`
 - **Backend**: `https://microimport-backend.onrender.com`
 - **API**: `https://microimport-backend.onrender.com/api`
 

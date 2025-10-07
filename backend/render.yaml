@@ -17,7 +17,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGIN
-        value: https://microimport-frontend.onrender.com
+        value: https://importf.onrender.com
 
 databases:
   - name: microimport-db
