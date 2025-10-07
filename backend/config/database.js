@@ -22,6 +22,9 @@ const connectDB = async () => {
     console.log('  - PORT:', process.env.PORT);
     console.log('  - MONGODB_URI exists:', !!process.env.MONGODB_URI);
     console.log('  - MONGODB_URI length:', process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0);
+    console.log('  - MONGODB_URI value (first 50 chars):', process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 50) + '...' : 'UNDEFINED');
+    console.log('  - All env vars starting with MONGO:', Object.keys(process.env).filter(key => key.startsWith('MONGO')));
+    console.log('  - All env vars:', Object.keys(process.env).sort());
     
     // Configuration de connexion avec timeout
     const options = {

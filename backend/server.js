@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
+// Setup environment variables for Render deployment
+require('./setup-env');
+
 const connectDB = require('./config/database');
 const { errorHandler } = require('./middleware/validation');
 
