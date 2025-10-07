@@ -105,7 +105,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input
-            placeholder="Rechercher par destination, marchandise..."
+            placeholder="Rechercher dans vos voyages..."
             value={filters.search}
             onChange={(e) => updateFilter('search', e.target.value)}
             className="pl-10"
@@ -119,7 +119,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
               Destination
             </label>
             <Input
-              placeholder="Dubaï, Istanbul..."
+              placeholder="Sélectionnez une destination"
               value={filters.destination}
               onChange={(e) => updateFilter('destination', e.target.value)}
             />
@@ -133,7 +133,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
               options={statusOptions}
               value={filters.status}
               onChange={(value) => updateFilter('status', value)}
-              placeholder="Sélectionner un statut"
+              placeholder="Choisissez un statut"
             />
           </div>
         </div>
@@ -189,7 +189,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
                   </label>
                   <Input
                     type="number"
-                    placeholder="0"
+                    placeholder="Montant minimum"
                     value={filters.minBenefice}
                     onChange={(e) => updateFilter('minBenefice', e.target.value)}
                   />
@@ -200,7 +200,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
                   </label>
                   <Input
                     type="number"
-                    placeholder="∞"
+                    placeholder="Montant maximum"
                     value={filters.maxBenefice}
                     onChange={(e) => updateFilter('maxBenefice', e.target.value)}
                   />
@@ -222,7 +222,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
                     options={sortOptions}
                     value={filters.sortBy}
                     onChange={(value) => updateFilter('sortBy', value)}
-                    placeholder="Sélectionner un critère"
+                    placeholder="Choisissez un critère"
                   />
                 </div>
                 <div>
@@ -236,7 +236,7 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
                     ]}
                     value={filters.sortOrder}
                     onChange={(value) => updateFilter('sortOrder', value as 'asc' | 'desc')}
-                    placeholder="Sélectionner un ordre"
+                    placeholder="Choisissez un ordre"
                   />
                 </div>
               </div>

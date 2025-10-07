@@ -498,7 +498,7 @@ const MerchandiseForm: React.FC<MerchandiseFormProps> = ({
           label="Nom du produit"
           value={formData.nom}
           onChange={(e) => updateFormData('nom', e.target.value)}
-          placeholder="ex: iPhone 15 Pro"
+          placeholder="Entrez le nom de la marchandise"
           error={errors.nom}
           required
         />

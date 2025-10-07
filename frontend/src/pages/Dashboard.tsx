@@ -31,31 +31,105 @@ import {
   Bar
 } from 'recharts'
 
-const revenueData = [
-  { month: 'Jan', revenue: 400000, profit: 120000 },
-  { month: 'Fév', revenue: 300000, profit: 90000 },
-  { month: 'Mar', revenue: 500000, profit: 150000 },
-  { month: 'Avr', revenue: 450000, profit: 135000 },
-  { month: 'Mai', revenue: 600000, profit: 180000 },
-  { month: 'Jun', revenue: 550000, profit: 165000 },
-]
+// Fonction pour générer les données de revenus basées sur les vraies données
+const generateRevenueData = (voyages: any[]) => {
+  if (!voyages || voyages.length === 0) {
+    return [
+      { month: 'Jan', revenue: 0, profit: 0 },
+      { month: 'Fév', revenue: 0, profit: 0 },
+      { month: 'Mar', revenue: 0, profit: 0 },
+      { month: 'Avr', revenue: 0, profit: 0 },
+      { month: 'Mai', revenue: 0, profit: 0 },
+      { month: 'Jun', revenue: 0, profit: 0 },
+    ]
+  }
 
-const pieData = [
-  { name: 'Dubaï', value: 35, color: '#3b82f6' },
-  { name: 'Istanbul', value: 25, color: '#8b5cf6' },
-  { name: 'Guangzhou', value: 20, color: '#10b981' },
-  { name: 'Autres', value: 20, color: '#f59e0b' },
-]
+  const monthlyData = voyages.reduce((acc, voyage) => {
+    const month = new Date(voyage.date).toLocaleDateString('fr-FR', { month: 'short' })
+    const revenue = voyage.marchandises?.reduce((sum: number, marchandise: any) => 
+      sum + (marchandise.prixVenteUnitaire * marchandise.quantite), 0) || 0
+    const profit = revenue * 0.3 // Estimation du profit à 30%
+    
+    if (!acc[month]) {
+      acc[month] = { revenue: 0, profit: 0 }
+    }
+    acc[month].revenue += revenue
+    acc[month].profit += profit
+    
+    return acc
+  }, {})
 
-const barData = [
-  { category: 'Électronique', value: 400000 },
-  { category: 'Textile', value: 300000 },
-  { category: 'Automobile', value: 200000 },
-  { category: 'Alimentaire', value: 150000 },
-]
+  return Object.entries(monthlyData).map(([month, data]: [string, any]) => ({
+    month,
+    revenue: data.revenue,
+    profit: data.profit
+  }))
+}
+
+// Fonction pour générer les données de destinations
+const generateDestinationData = (voyages: any[]) => {
+  if (!voyages || voyages.length === 0) {
+    return [
+      { name: 'Aucune', value: 100, color: '#6b7280' }
+    ]
+  }
+
+  const destinationCounts = voyages.reduce((acc: any, voyage) => {
+    const dest = voyage.destination || 'Inconnue'
+    acc[dest] = (acc[dest] || 0) + 1
+    return acc
+  }, {})
+
+  const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4']
+  
+  return Object.entries(destinationCounts)
+    .sort(([,a], [,b]) => (b as number) - (a as number))
+    .slice(0, 6)
+    .map(([name, value], index) => ({
+      name,
+      value: value as number,
+      color: colors[index % colors.length]
+    }))
+}
+
+// Fonction pour générer les données de catégories
+const generateCategoryData = (voyages: any[]) => {
+  if (!voyages || voyages.length === 0) {
+    return [
+      { category: 'Aucune', value: 0 }
+    ]
+  }
+
+  const categoryData = voyages.reduce((acc: any, voyage) => {
+    voyage.marchandises?.forEach((marchandise: any) => {
+      const category = marchandise.nom || 'Inconnue'
+      const value = marchandise.prixVenteUnitaire * marchandise.quantite
+      
+      if (!acc[category]) {
+        acc[category] = 0
+      }
+      acc[category] += value
+    })
+    
+    return acc
+  }, {})
+
+  return Object.entries(categoryData)
+    .sort(([,a], [,b]) => (b as number) - (a as number))
+    .slice(0, 6)
+    .map(([category, value]) => ({
+      category,
+      value: value as number
+    }))
+}
 
 export function Dashboard() {
   const { stats: dashboardStats, loading, error, clearError } = useDashboard()
+  
+  // Générer les données basées sur les vraies données
+  const revenueData = generateRevenueData(dashboardStats?.voyages || [])
+  const pieData = generateDestinationData(dashboardStats?.voyages || [])
+  const barData = generateCategoryData(dashboardStats?.voyages || [])
 
   const stats = [
     {

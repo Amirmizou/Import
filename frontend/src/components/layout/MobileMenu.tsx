@@ -94,7 +94,7 @@ export function MobileMenu({ isOpen, onClose, currentPage, onPageChange }: Mobil
                       {user?.name || 'Utilisateur'}
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                      {user?.email || 'user@example.com'}
+                      {user?.email || 'Non connecté'}
                     </p>
                   </div>
                 </div>

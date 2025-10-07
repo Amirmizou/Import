@@ -125,7 +125,7 @@ export function Configuration() {
                     value={taux}
                     onChange={(e) => setTauxChange({ ...tauxChange, [devise]: Number(e.target.value) })}
                     className="flex-1"
-                    placeholder="0"
+                    placeholder="Entrez le montant"
                     min="0"
                     step="0.01"
                   />

@@ -259,7 +259,7 @@ export const VoyageForm: React.FC<VoyageFormProps> = ({
                   label="Destination"
                   value={voyageData.destination}
                   onChange={(e) => updateVoyageData({ destination: e.target.value })}
-                  placeholder="ex: Dubaï, Istanbul, Guangzhou..."
+                  placeholder="Entrez la destination du voyage"
                   error={errors.destination}
                   required
                   icon={<MapPin className="h-4 w-4" />}
@@ -289,7 +289,7 @@ export const VoyageForm: React.FC<VoyageFormProps> = ({
                   type="number"
                   value={voyageData.fraisSupplementaires}
                   onChange={(e) => updateVoyageData({ fraisSupplementaires: Number(e.target.value) })}
-                  placeholder="0"
+                  placeholder="Entrez le montant"
                   min="0"
                   step="0.01"
                   hint="Frais imprévus, commissions, etc."
@@ -333,7 +333,7 @@ export const VoyageForm: React.FC<VoyageFormProps> = ({
                       [key]: Number(e.target.value) 
                     } 
                   })}
-                  placeholder="0"
+                  placeholder="Entrez le montant"
                   min="0"
                   step="0.01"
                 />

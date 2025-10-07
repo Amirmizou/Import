@@ -161,7 +161,7 @@ export function Profile() {
                   <Input
                     value={profileData.name}
                     onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                    placeholder="Votre nom complet"
+                    placeholder="Entrez votre nom complet"
                   />
                 ) : (
                   <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -190,7 +190,7 @@ export function Profile() {
                   <Input
                     value={profileData.phone}
                     onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                    placeholder="Votre numéro de téléphone"
+                    placeholder="Entrez votre numéro de téléphone"
                   />
                 ) : (
                   <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -208,7 +208,7 @@ export function Profile() {
                   <Input
                     value={profileData.location}
                     onChange={(e) => setProfileData({ ...profileData, location: e.target.value })}
-                    placeholder="Votre ville ou région"
+                    placeholder="Entrez votre ville ou région"
                   />
                 ) : (
                   <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -272,7 +272,7 @@ export function Profile() {
                         type={showCurrentPassword ? "text" : "password"}
                         value={passwordData.currentPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                        placeholder="Votre mot de passe actuel"
+                        placeholder="Entrez votre mot de passe actuel"
                       />
                       <button
                         type="button"
@@ -293,7 +293,7 @@ export function Profile() {
                         type={showNewPassword ? "text" : "password"}
                         value={passwordData.newPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                        placeholder="Nouveau mot de passe"
+                        placeholder="Entrez votre nouveau mot de passe"
                       />
                       <button
                         type="button"
@@ -314,7 +314,7 @@ export function Profile() {
                         type={showConfirmPassword ? "text" : "password"}
                         value={passwordData.confirmPassword}
                         onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                        placeholder="Confirmer le nouveau mot de passe"
+                        placeholder="Confirmez votre nouveau mot de passe"
                       />
                       <button
                         type="button"

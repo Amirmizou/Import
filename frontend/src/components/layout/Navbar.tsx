@@ -143,7 +143,7 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
                     {user?.name ? truncateName(user.name, 15) : 'Utilisateur'}
                   </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400 max-w-32 truncate">
-                    {user?.email ? truncateName(user.email, 20) : 'user@example.com'}
+                    {user?.email ? truncateName(user.email, 20) : 'Non connecté'}
                   </span>
                 </div>
                 <ChevronDown className={cn(
@@ -175,7 +175,7 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
                             {user?.name || 'Utilisateur'}
                           </p>
                           <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                            {user?.email || 'user@example.com'}
+                            {user?.email || 'Non connecté'}
                           </p>
                         </div>
                       </div>

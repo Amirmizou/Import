@@ -99,7 +99,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="Votre nom complet"
+            placeholder="Entrez votre nom complet"
             required
             disabled={isLoading}
           />
@@ -112,7 +112,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="votre@email.com"
+            placeholder="Entrez votre adresse email"
             required
             disabled={isLoading}
           />
@@ -125,7 +125,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+213 123 456 789"
+            placeholder="Entrez votre numéro de téléphone"
             disabled={isLoading}
           />
         </div>
@@ -137,7 +137,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="location"
             value={formData.location}
             onChange={handleChange}
-            placeholder="Alger, Algérie"
+            placeholder="Entrez votre ville ou région"
             disabled={isLoading}
           />
         </div>
@@ -149,7 +149,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Au moins 6 caractères"
+            placeholder="Créez un mot de passe sécurisé"
             required
             disabled={isLoading}
           />
@@ -170,7 +170,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder="Répétez votre mot de passe"
+            placeholder="Confirmez votre mot de passe"
             required
             disabled={isLoading}
           />

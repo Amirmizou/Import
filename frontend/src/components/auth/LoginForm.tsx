@@ -76,7 +76,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="votre@email.com"
+            placeholder="Entrez votre adresse email"
             required
             disabled={isLoading}
           />
@@ -89,7 +89,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister }) => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Votre mot de passe"
+            placeholder="Entrez votre mot de passe"
             required
             disabled={isLoading}
           />
