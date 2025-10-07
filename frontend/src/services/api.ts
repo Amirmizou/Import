@@ -18,14 +18,15 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl()
 
-// Log pour debug (seulement en développement)
-if (import.meta.env.DEV) {
-  console.log('🔧 Configuration API:', {
-    environment: import.meta.env.MODE,
-    apiUrl: API_BASE_URL,
-    viteApiUrl: import.meta.env.VITE_API_URL
-  })
-}
+// Log pour debug (toujours afficher pour diagnostiquer)
+console.log('🔧 Configuration API:', {
+  environment: import.meta.env.MODE,
+  isDev: import.meta.env.DEV,
+  isProd: import.meta.env.PROD,
+  apiUrl: API_BASE_URL,
+  viteApiUrl: import.meta.env.VITE_API_URL,
+  location: window.location.href
+})
 
 // Types
 export interface User {

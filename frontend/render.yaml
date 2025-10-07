@@ -7,4 +7,5 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_API_URL
-        value: https://microimport-backend.onrender.com
+        value: https://importb.onrender.com
+
