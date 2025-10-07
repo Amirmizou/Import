@@ -41,3 +41,4 @@ echo Frontend: http://localhost:5173
 echo.
 echo Appuyez sur une touche pour fermer...
 pause > nul
+

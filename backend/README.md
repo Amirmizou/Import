@@ -121,3 +121,4 @@ curl -X POST http://localhost:5000/api/auth/register \
 - Tous les calculs de coûts et bénéfices sont automatiques
 - Les plafonds légaux sont vérifiés automatiquement
 - L'authentification est requise pour toutes les routes de voyages
+

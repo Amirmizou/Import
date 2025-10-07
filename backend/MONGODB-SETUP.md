@@ -129,3 +129,4 @@ Vous devriez voir:
 - **Production:** Utilisez des clés JWT longues et aléatoires
 - **Atlas:** Le cluster gratuit a des limites (512MB, 100 connexions)
 - **Local:** MongoDB local est plus rapide pour le développement
+

@@ -55,6 +55,35 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Améliorer l'expérience tactile sur mobile */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Permettre la sélection de texte dans les inputs et textareas */
+  input, textarea, [contenteditable] {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+  
+  /* Améliorer le scroll sur mobile */
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Optimiser les performances de scroll */
+  * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
 
@@ -105,4 +134,123 @@
 
 .animate-scale-in {
   animation: scaleIn 0.3s ease-out;
+}
+
+/* Mobile-specific styles */
+@layer utilities {
+  /* Améliorer les boutons tactiles */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Masquer la scrollbar sur mobile */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Améliorer les transitions sur mobile */
+  .mobile-transition {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Optimiser les performances d'animation */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  /* Améliorer le rendu des polices sur mobile */
+  .antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Styles pour les cartes mobiles */
+  .mobile-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4;
+  }
+  
+  /* Styles pour les boutons mobiles */
+  .mobile-button {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+  
+  /* Styles pour les inputs mobiles */
+  .mobile-input {
+    @apply min-h-[44px] text-base;
+  }
+  
+  /* Styles pour les grilles responsives */
+  .responsive-grid {
+    @apply grid gap-3 sm:gap-4 lg:gap-6;
+  }
+  
+  /* Styles pour les conteneurs responsives */
+  .responsive-container {
+    @apply px-3 sm:px-4 lg:px-6 xl:px-8;
+  }
+  
+  /* Styles pour les textes responsives */
+  .responsive-text {
+    @apply text-sm sm:text-base lg:text-lg;
+  }
+  
+  /* Styles pour les titres responsives */
+  .responsive-title {
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+  }
+  
+  /* Styles pour les espacements responsives */
+  .responsive-spacing {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+  
+  /* Styles pour les marges responsives */
+  .responsive-margin {
+    @apply m-3 sm:m-4 lg:m-6;
+  }
+  
+  /* Styles pour les bordures responsives */
+  .responsive-border {
+    @apply border border-gray-200 dark:border-gray-700 rounded-lg;
+  }
+  
+  /* Styles pour les ombres responsives */
+  .responsive-shadow {
+    @apply shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  /* Styles pour les animations responsives */
+  .responsive-animation {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* Styles pour les focus states sur mobile */
+  .mobile-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  /* Styles pour les états actifs sur mobile */
+  .mobile-active {
+    @apply active:scale-95 active:bg-opacity-80;
+  }
+  
+  /* Styles pour les états hover sur desktop */
+  .desktop-hover {
+    @apply hover:bg-opacity-90 hover:shadow-lg;
+  }
+  
+  /* Styles pour les breakpoints personnalisés */
+  @media (max-width: 475px) {
+    .xs\:text-xs { font-size: 0.75rem; }
+    .xs\:text-sm { font-size: 0.875rem; }
+    .xs\:p-2 { padding: 0.5rem; }
+    .xs\:p-3 { padding: 0.75rem; }
+    .xs\:gap-2 { gap: 0.5rem; }
+    .xs\:gap-3 { gap: 0.75rem; }
+  }
 }

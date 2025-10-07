@@ -53,3 +53,4 @@ VITE_API_URL=https://microimport-backend.onrender.com
 - Les services Render peuvent être lents au premier démarrage (cold start)
 - MongoDB Atlas est configuré pour la production
 - CORS est correctement configuré pour le frontend déployé
+

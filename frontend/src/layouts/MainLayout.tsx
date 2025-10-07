@@ -16,15 +16,29 @@ export function MainLayout({ children, showSidebar = true, currentPage, onPageCh
       <Navbar currentPage={currentPage} onPageChange={onPageChange} />
       
       <div className="flex">
-        {showSidebar && <Sidebar currentPage={currentPage} onPageChange={onPageChange} />}
+        {/* Sidebar - Hidden on mobile, visible on desktop */}
+        {showSidebar && (
+          <div className="hidden lg:block">
+            <Sidebar currentPage={currentPage} onPageChange={onPageChange} />
+          </div>
+        )}
         
         <motion.main
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className={`flex-1 p-4 lg:p-8 ${showSidebar ? 'ml-64' : ''}`}
+          className={`
+            flex-1 
+            p-3 sm:p-4 lg:p-6 xl:p-8
+            pt-20 sm:pt-20 lg:pt-4
+            ${showSidebar ? 'lg:ml-64' : ''}
+            min-h-screen
+            transition-all duration-300
+          `}
         >
-          {children}
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </motion.main>
       </div>
     </div>

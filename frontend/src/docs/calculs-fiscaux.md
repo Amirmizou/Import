@@ -101,3 +101,4 @@ L'application valide automatiquement :
 - La conversion de devise correcte
 - Les limites de voyage (plafond)
 - La cohérence des calculs entre les différentes composantes
+

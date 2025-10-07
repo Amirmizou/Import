@@ -33,3 +33,4 @@ router.put('/:id', auth, updateConfigurationValidation, handleValidationErrors, 
 router.delete('/:id', auth, deleteConfiguration);
 
 module.exports = router;
+

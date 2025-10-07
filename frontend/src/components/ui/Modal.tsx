@@ -150,3 +150,4 @@ export const ModalFooter: React.FC<{ children: React.ReactNode; className?: stri
     {children}
   </div>
 )
+

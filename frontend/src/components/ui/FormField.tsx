@@ -229,3 +229,4 @@ export const EnhancedTextarea: React.FC<EnhancedTextareaProps> = ({
 
   return textareaElement
 }
+

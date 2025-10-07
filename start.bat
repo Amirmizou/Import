@@ -60,3 +60,4 @@ echo 4. Ajoutez vos marchandises
 echo 5. Consultez vos statistiques
 echo.
 pause
+

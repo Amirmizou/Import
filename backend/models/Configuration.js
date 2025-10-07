@@ -34,3 +34,4 @@ const configurationSchema = new mongoose.Schema({
 configurationSchema.index({ nom: 1, type: 1, user: 1 }, { unique: true });
 
 module.exports = mongoose.model('Configuration', configurationSchema);
+

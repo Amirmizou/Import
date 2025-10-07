@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Sun, Moon, Sparkles, LogOut, User, ChevronDown, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Switch } from '@/components/ui/Switch'
+import { MobileMenu } from '@/components/layout/MobileMenu'
 import { useDarkMode } from '@/hooks/useDarkMode'
 import { useAuth } from '@/contexts/AuthContext'
 import { cn } from '@/lib/utils'
@@ -69,24 +70,25 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
         className
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-2 sm:space-x-3"
           >
             <div className="relative">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
-                <Sparkles className="h-7 w-7 text-white" />
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl shadow-lg">
+                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                MicroImport Pro
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="hidden sm:inline">MicroImport Pro</span>
+                <span className="sm:hidden">MIP</span>
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 -mt-1">
+              <span className="text-xs text-gray-500 dark:text-gray-400 -mt-1 hidden sm:block">
                 Gestion d'import
               </span>
             </div>
@@ -247,106 +249,19 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
                 className="md:hidden rounded-xl"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <motion.div
-                  animate={{ rotate: isMenuOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                </motion.div>
+                <Menu className="h-5 w-5" />
               </Button>
             </motion.div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="px-4 pt-4 pb-6 space-y-2 border-t border-gray-200 dark:border-gray-700 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-                {/* User Info Mobile */}
-                <div className="px-4 py-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 mb-4 shadow-sm">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-lg font-bold text-white">
-                        {user?.name ? getInitials(user.name) : 'U'}
-                      </span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 dark:text-white text-lg truncate">
-                        {user?.name || 'Utilisateur'}
-                      </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                        {user?.email || 'user@example.com'}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Navigation Items */}
-                <div className="space-y-1">
-                  {navItems.map((item) => (
-                    <motion.button
-                      key={item.name}
-                      onClick={() => {
-                        onPageChange?.(item.page)
-                        setIsMenuOpen(false)
-                      }}
-                      whileHover={{ x: 8 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={cn(
-                        "w-full text-left px-4 py-3 rounded-xl font-medium transition-all duration-200 flex items-center space-x-3",
-                        currentPage === item.page
-                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800"
-                          : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                      )}
-                    >
-                      <div className={cn(
-                        "w-2 h-2 rounded-full",
-                        currentPage === item.page ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
-                      )} />
-                      <span>{item.name}</span>
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
-                  <motion.button
-                    onClick={() => {
-                      onPageChange?.('settings')
-                      setIsMenuOpen(false)
-                    }}
-                    whileHover={{ x: 8 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full text-left px-4 py-3 rounded-xl font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-all duration-200 flex items-center space-x-3"
-                  >
-                    <Settings className="h-5 w-5" />
-                    <span>Paramètres</span>
-                  </motion.button>
-                  
-                  <motion.button
-                    onClick={() => {
-                      logout()
-                      setIsMenuOpen(false)
-                    }}
-                    whileHover={{ x: 8 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full text-left px-4 py-3 rounded-xl font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 transition-all duration-200 flex items-center space-x-3"
-                  >
-                    <LogOut className="h-5 w-5" />
-                    <span>Déconnexion</span>
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Mobile Menu */}
+        <MobileMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          currentPage={currentPage}
+          onPageChange={onPageChange}
+        />
       </div>
     </motion.nav>
   )

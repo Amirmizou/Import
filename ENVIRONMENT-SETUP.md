@@ -175,3 +175,4 @@ web-app/
 3. **Sécurisé** : CORS configuré pour les bonnes origines
 4. **Debug** : Logs pour identifier les problèmes
 5. **Compatible** : Fonctionne en local ET sur Render
+

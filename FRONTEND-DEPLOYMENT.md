@@ -52,3 +52,4 @@ VITE_API_URL=https://votre-backend.onrender.com
 - **Erreur CORS**: Vérifiez que `CORS_ORIGIN` pointe vers l'URL exacte du frontend
 - **Erreur de build**: Vérifiez que `VITE_API_URL` est correctement configurée
 - **Service qui ne démarre pas**: Vérifiez les logs dans Render Dashboard
+

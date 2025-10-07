@@ -72,3 +72,4 @@ marchandiseSchema.virtual('margeBrutePercent').get(function() {
 marchandiseSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Marchandise', marchandiseSchema);
+

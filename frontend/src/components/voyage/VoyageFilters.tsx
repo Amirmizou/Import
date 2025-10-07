@@ -309,3 +309,4 @@ export const VoyageFilters: React.FC<VoyageFiltersProps> = ({
     </Card>
   )
 }
+
