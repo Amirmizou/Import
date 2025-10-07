@@ -63,34 +63,34 @@ export function MobileMenu({ isOpen, onClose, currentPage, onPageChange }: Mobil
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed left-0 top-0 h-full w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl z-50"
+            className="fixed left-0 top-0 h-full w-80 max-w-[90vw] bg-white dark:bg-gray-900 shadow-2xl z-50"
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Menu
                 </h2>
                 <Button
                   variant="ghost"
-                  size="icon-sm"
+                  size="icon"
                   onClick={onClose}
-                  className="rounded-full"
+                  className="rounded-full min-h-[48px] min-w-[48px]"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 </Button>
               </div>
 
               {/* User Info */}
-              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-lg font-bold text-white">
+              <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                    <span className="text-xl font-bold text-white">
                       {user?.name ? getInitials(user.name) : 'U'}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 dark:text-white truncate">
+                    <p className="text-lg font-semibold text-gray-900 dark:text-white truncate">
                       {user?.name || 'Utilisateur'}
                     </p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
@@ -101,8 +101,8 @@ export function MobileMenu({ isOpen, onClose, currentPage, onPageChange }: Mobil
               </div>
 
               {/* Navigation Items */}
-              <div className="flex-1 overflow-y-auto p-4">
-                <nav className="space-y-2">
+              <div className="flex-1 overflow-y-auto p-6">
+                <nav className="space-y-3">
                   {menuItems.map((item, index) => (
                     <motion.button
                       key={item.page}
@@ -111,27 +111,27 @@ export function MobileMenu({ isOpen, onClose, currentPage, onPageChange }: Mobil
                       transition={{ delay: index * 0.1 }}
                       onClick={() => handlePageChange(item.page)}
                       className={cn(
-                        "w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200",
+                        "w-full flex items-center space-x-4 px-6 py-4 rounded-xl text-left transition-all duration-200 min-h-[56px]",
                         currentPage === item.page
                           ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                           : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                       )}
                     >
-                      <item.icon className="h-5 w-5 flex-shrink-0" />
-                      <span className="font-medium">{item.label}</span>
+                      <item.icon className="h-6 w-6 flex-shrink-0" />
+                      <span className="text-lg font-medium">{item.label}</span>
                     </motion.button>
                   ))}
                 </nav>
               </div>
 
               {/* Footer Actions */}
-              <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+              <div className="p-6 border-t border-gray-200 dark:border-gray-700 space-y-3">
                 <Button
                   variant="outline"
                   onClick={handleLogout}
-                  className="w-full justify-start"
+                  className="w-full justify-start min-h-[56px] text-lg"
                 >
-                  <LogOut className="h-4 w-4 mr-2" />
+                  <LogOut className="h-6 w-6 mr-3" />
                   Déconnexion
                 </Button>
               </div>

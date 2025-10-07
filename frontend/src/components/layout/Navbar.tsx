@@ -70,25 +70,25 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
         className
       )}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2 sm:space-x-3"
+            className="flex items-center space-x-3 sm:space-x-4"
           >
             <div className="relative">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl shadow-lg">
-                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-white" />
+              <div className="p-3 sm:p-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl shadow-lg">
+                <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-white" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-green-500 rounded-full border-2 border-white dark:border-gray-900"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 <span className="hidden sm:inline">MicroImport Pro</span>
                 <span className="sm:hidden">MIP</span>
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 -mt-1 hidden sm:block">
+              <span className="text-sm text-gray-500 dark:text-gray-400 -mt-1 hidden sm:block">
                 Gestion d'import
               </span>
             </div>
@@ -225,17 +225,18 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
 
             {/* Theme Toggle */}
             <motion.div 
-              className="flex items-center space-x-2 p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+              className="flex items-center space-x-2 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Sun className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+              <Sun className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500 dark:text-gray-400" />
               <Switch
                 checked={isDark}
                 onCheckedChange={toggleTheme}
                 aria-label="Toggle dark mode"
+                className="scale-110 sm:scale-125"
               />
-              <Moon className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+              <Moon className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500 dark:text-gray-400" />
             </motion.div>
 
             {/* Mobile Menu Button */}
@@ -246,10 +247,10 @@ export function Navbar({ className, currentPage, onPageChange }: NavbarProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden rounded-xl"
+                className="md:hidden rounded-xl min-h-[48px] min-w-[48px] p-3"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-6 w-6" />
               </Button>
             </motion.div>
           </div>

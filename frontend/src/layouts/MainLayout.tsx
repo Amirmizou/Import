@@ -29,8 +29,8 @@ export function MainLayout({ children, showSidebar = true, currentPage, onPageCh
           transition={{ duration: 0.5 }}
           className={`
             flex-1 
-            p-3 sm:p-4 lg:p-6 xl:p-8
-            pt-20 sm:pt-20 lg:pt-4
+            p-4 sm:p-6 lg:p-8 xl:p-10
+            pt-20 sm:pt-22 lg:pt-4
             ${showSidebar ? 'lg:ml-64' : ''}
             min-h-screen
             transition-all duration-300

@@ -176,12 +176,17 @@
   
   /* Styles pour les boutons mobiles */
   .mobile-button {
-    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+    @apply min-h-[48px] min-w-[48px] touch-manipulation text-base;
   }
   
   /* Styles pour les inputs mobiles */
   .mobile-input {
-    @apply min-h-[44px] text-base;
+    @apply min-h-[48px] text-base px-4 py-3;
+  }
+  
+  /* Styles pour les boutons de navigation mobile */
+  .mobile-nav-button {
+    @apply min-h-[56px] min-w-[56px] touch-manipulation text-lg px-6 py-4;
   }
   
   /* Styles pour les grilles responsives */
