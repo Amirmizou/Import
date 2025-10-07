@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { getApiBaseUrl } from '@/utils/apiUrl'
 
 // Types from API
 export interface Configuration {
@@ -20,7 +21,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('http://localhost:5000/api/configurations', {
+      const response = await fetch('${getApiBaseUrl()}/configurations', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -49,7 +50,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('http://localhost:5000/api/configurations', {
+      const response = await fetch('${getApiBaseUrl()}/configurations', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -81,7 +82,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`http://localhost:5000/api/configurations/${id}`, {
+      const response = await fetch(`${getApiBaseUrl()}/configurations/${id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -113,7 +114,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`http://localhost:5000/api/configurations/${id}`, {
+      const response = await fetch(`${getApiBaseUrl()}/configurations/${id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

@@ -5,6 +5,7 @@ import {
   type TauxChange,
   type MargesSuggerees
 } from '@/services/businessLogic'
+import { getApiBaseUrl } from '@/utils/apiUrl'
 
 export const useBusinessConfig = () => {
   const [tauxChange, setTauxChange] = useState<TauxChange>(TAUX_CHANGE_DEFAUT)
@@ -19,7 +20,7 @@ export const useBusinessConfig = () => {
       setError(null)
       
       // Charger les taux de change
-      const tauxResponse = await fetch('http://localhost:5000/api/configurations?type=taux_change', {
+      const tauxResponse = await fetch(`${getApiBaseUrl()}/configurations?type=taux_change`, {
         method: 'GET',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -40,7 +41,7 @@ export const useBusinessConfig = () => {
       }
 
       // Charger les marges suggérées
-      const margesResponse = await fetch('http://localhost:5000/api/configurations?type=marges', {
+      const margesResponse = await fetch(`${getApiBaseUrl()}/configurations?type=marges`, {
         method: 'GET',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -75,7 +76,7 @@ export const useBusinessConfig = () => {
       setError(null)
 
       const promises = Object.entries(newTauxChange).map(([key, value]) => 
-        fetch('http://localhost:5000/api/configurations', {
+        fetch(`${getApiBaseUrl()}/configurations`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -105,7 +106,7 @@ export const useBusinessConfig = () => {
       setError(null)
 
       const promises = Object.entries(newMarges).map(([key, value]) => 
-        fetch('http://localhost:5000/api/configurations', {
+        fetch(`${getApiBaseUrl()}/configurations`, {
           method: 'POST',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },

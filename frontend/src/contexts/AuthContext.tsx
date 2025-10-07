@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const isAuthenticated = !!user
 
-  // Fonction utilitaire pour obtenir l'URL de l'API
+  // Import de la fonction centralisée
   const getApiBaseUrl = () => {
     if (import.meta.env.PROD) {
       return 'https://importb.onrender.com/api'

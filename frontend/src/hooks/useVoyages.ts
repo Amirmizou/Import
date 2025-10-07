@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { getApiBaseUrl } from '@/utils/apiUrl'
 
 // Types from API
 export interface Voyage {
@@ -66,7 +67,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('http://localhost:5000/api/voyages', {
+      const response = await fetch('${getApiBaseUrl()}/voyages', {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -100,7 +101,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('http://localhost:5000/api/voyages', {
+      const response = await fetch('${getApiBaseUrl()}/voyages', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -132,7 +133,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`http://localhost:5000/api/voyages/${id}`, {
+      const response = await fetch(`${getApiBaseUrl()}/voyages/${id}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -164,7 +165,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch(`http://localhost:5000/api/voyages/${id}`, {
+      const response = await fetch(`${getApiBaseUrl()}/voyages/${id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -219,7 +220,7 @@ export const useVoyageStats = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('http://localhost:5000/api/voyages/stats', {
+      const response = await fetch('${getApiBaseUrl()}/voyages/stats', {
         method: 'GET',
         credentials: 'include',
         headers: {

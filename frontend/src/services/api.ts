@@ -1,32 +1,7 @@
 import axios from 'axios'
-
-// Configuration automatique de l'URL de l'API
-const getApiBaseUrl = () => {
-  // Si on est en production (Render), utiliser l'URL de production
-  if (import.meta.env.PROD) {
-    return 'https://importb.onrender.com/api'
-  }
-  
-  // Si une variable d'environnement est définie, l'utiliser
-  if (import.meta.env.VITE_API_URL) {
-    return `${import.meta.env.VITE_API_URL}/api`
-  }
-  
-  // Par défaut, utiliser localhost pour le développement
-  return 'http://localhost:5000/api'
-}
+import { getApiBaseUrl } from '@/utils/apiUrl'
 
 const API_BASE_URL = getApiBaseUrl()
-
-// Log pour debug (toujours afficher pour diagnostiquer)
-console.log('🔧 Configuration API:', {
-  environment: import.meta.env.MODE,
-  isDev: import.meta.env.DEV,
-  isProd: import.meta.env.PROD,
-  apiUrl: API_BASE_URL,
-  viteApiUrl: import.meta.env.VITE_API_URL,
-  location: window.location.href
-})
 
 // Types
 export interface User {
