@@ -75,10 +75,36 @@ const corsOptions = {
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  preflightContinue: false
 };
 
 app.use(cors(corsOptions));
+
+// Additional CORS handling for preflight requests
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = getAllowedOrigins();
+  
+  if (req.method === 'OPTIONS') {
+    console.log('🔄 Preflight request from:', origin);
+    console.log('📋 Allowed origins:', allowedOrigins);
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      res.header('Access-Control-Allow-Origin', origin || '*');
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+      res.header('Access-Control-Allow-Credentials', 'true');
+      res.header('Access-Control-Max-Age', '86400');
+      return res.status(200).end();
+    } else {
+      console.log('🚫 Preflight blocked for origin:', origin);
+      return res.status(403).json({ error: 'CORS preflight blocked' });
+    }
+  }
+  
+  next();
+});
 
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
@@ -98,7 +124,20 @@ app.get('/api/health', (req, res) => {
     success: true,
     message: 'MicroImport API is running',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    cors: {
+      origin: req.headers.origin,
+      allowedOrigins: getAllowedOrigins()
+    }
+  });
+});
+
+// Simple test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Test endpoint working',
+    timestamp: new Date().toISOString()
   });
 });
 
