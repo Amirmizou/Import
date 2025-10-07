@@ -11,14 +11,10 @@ services:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        fromDatabase:
-          name: microimport-db
-          property: connectionString
+        value: mongodb+srv://admin:mizou450@cluster0.xb4dzcy.mongodb.net/Import?retryWrites=true&w=majority&appName=Cluster0
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGIN
         value: https://importf.onrender.com
-
-databases:
-  - name: microimport-db
-    plan: free
+      - key: CLIENT_URL
+        value: https://importf.onrender.com
