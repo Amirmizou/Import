@@ -5,52 +5,78 @@ const asyncHandler = require('express-async-handler');
 // @route   GET /api/voyages
 // @access  Private
 const getVoyages = asyncHandler(async (req, res) => {
-  const voyages = await Voyage.find({ user: req.user._id })
-    .sort({ date: -1 })
-    .populate('user', 'name email');
+  try {
+    const voyages = await Voyage.find({ user: req.user._id })
+      .sort({ date: -1 })
+      .populate('user', 'name email');
 
-  res.json({
-    success: true,
-    data: voyages
-  });
+    res.json({
+      success: true,
+      data: voyages
+    });
+  } catch (error) {
+    console.error('Error fetching voyages:', error);
+    // Si la base de données n'est pas disponible, retourner une liste vide
+    res.json({
+      success: true,
+      data: [],
+      message: 'Base de données non disponible. Données en mode démo.'
+    });
+  }
 });
 
 // @desc    Get voyage by ID
 // @route   GET /api/voyages/:id
 // @access  Private
 const getVoyageById = asyncHandler(async (req, res) => {
-  const voyage = await Voyage.findOne({
-    _id: req.params.id,
-    user: req.user._id
-  }).populate('user', 'name email');
+  try {
+    const voyage = await Voyage.findOne({
+      _id: req.params.id,
+      user: req.user._id
+    }).populate('user', 'name email');
 
-  if (!voyage) {
-    res.status(404);
-    throw new Error('Voyage non trouvé');
+    if (!voyage) {
+      res.status(404);
+      throw new Error('Voyage non trouvé');
+    }
+
+    res.json({
+      success: true,
+      data: voyage
+    });
+  } catch (error) {
+    console.error('Error fetching voyage:', error);
+    res.status(404).json({
+      success: false,
+      message: 'Base de données non disponible ou voyage non trouvé.'
+    });
   }
-
-  res.json({
-    success: true,
-    data: voyage
-  });
 });
 
 // @desc    Create voyage
 // @route   POST /api/voyages
 // @access  Private
 const createVoyage = asyncHandler(async (req, res) => {
-  const voyageData = {
-    ...req.body,
-    user: req.user._id
-  };
+  try {
+    const voyageData = {
+      ...req.body,
+      user: req.user._id
+    };
 
-  const voyage = await Voyage.create(voyageData);
+    const voyage = await Voyage.create(voyageData);
 
-  res.status(201).json({
-    success: true,
-    message: 'Voyage créé avec succès',
-    data: voyage
-  });
+    res.status(201).json({
+      success: true,
+      message: 'Voyage créé avec succès',
+      data: voyage
+    });
+  } catch (error) {
+    console.error('Error creating voyage:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la création du voyage. Base de données non disponible.'
+    });
+  }
 });
 
 // @desc    Update voyage

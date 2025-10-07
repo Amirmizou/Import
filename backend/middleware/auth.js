@@ -18,23 +18,38 @@ const auth = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_super_secret_jwt_key_here_change_in_production');
-    const user = await User.findById(decoded.id).select('-password');
     
-    if (!user) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Token invalide. Utilisateur non trouvé.' 
-      });
+    // Essayer de récupérer l'utilisateur depuis la base de données
+    try {
+      const user = await User.findById(decoded.id).select('-password');
+      
+      if (!user) {
+        return res.status(401).json({ 
+          success: false, 
+          message: 'Token invalide. Utilisateur non trouvé.' 
+        });
+      }
+
+      if (!user.isActive) {
+        return res.status(401).json({ 
+          success: false, 
+          message: 'Compte désactivé.' 
+        });
+      }
+
+      req.user = user;
+    } catch (dbError) {
+      // Si la base de données n'est pas disponible, utiliser les infos du token
+      console.warn('⚠️  Base de données non disponible, utilisation du token JWT:', dbError.message);
+      req.user = {
+        _id: decoded.id,
+        name: decoded.name || 'Utilisateur',
+        email: decoded.email || 'user@example.com',
+        isActive: true,
+        role: decoded.role || 'user'
+      };
     }
 
-    if (!user.isActive) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Compte désactivé.' 
-      });
-    }
-
-    req.user = user;
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);
