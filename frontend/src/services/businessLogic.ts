@@ -193,7 +193,7 @@ export const calculerVoyage = (
 
     const coutAchat = m.prixAchatUnitaire * m.quantite;
     const coutAchatDA = convertirEnDA(coutAchat, voyage.deviseVoyage, tauxChange);
-    const venteUnitaire = m.prixVenteUnitaire * m.quantite;
+    const venteTotalMarchandise = m.prixVenteUnitaire * m.quantite;
     
     // NOUVEAU CALCUL SELON LE RÉGIME FISCAL ALGÉRIEN 2025
     // Valeur en Douane (VD) = Prix d'Achat
@@ -216,7 +216,7 @@ export const calculerVoyage = (
     forfaitDroitsTaxes += forfaitDroitsTaxesUnitaire;
     contributionSolidarite += contributionSolidariteUnitaire;
     autresFrais += autresFraisUnitaire;
-    venteTotal += venteUnitaire;
+    venteTotal += venteTotalMarchandise;
     
     detailsMarchandises.push({
       nom: m.nom,
@@ -227,7 +227,7 @@ export const calculerVoyage = (
       contributionSolidariteUnitaire: contributionSolidariteUnitaire,
       autresFraisUnitaire: autresFraisUnitaire,
       coutTotalUnitaire: coutTotalUnitaire,
-      vente: venteUnitaire
+      vente: venteTotalMarchandise
     });
   });
 

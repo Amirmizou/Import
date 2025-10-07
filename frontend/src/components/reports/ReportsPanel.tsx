@@ -86,12 +86,24 @@ export const ReportsPanel: React.FC<ReportsPanelProps> = ({ className }) => {
 
     const totalVoyages = data.length
     const totalRevenue = data.reduce((sum, voyage) => {
+      // Utiliser les calculs réels du voyage si disponibles
+      if (voyage.calculs) {
+        return sum + voyage.calculs.venteTotal
+      }
+      // Sinon calculer à partir des marchandises
       const revenue = voyage.marchandises?.reduce((mSum: number, marchandise: any) => 
         mSum + (marchandise.prixVenteUnitaire * marchandise.quantite), 0) || 0
       return sum + revenue
     }, 0)
     
-    const averageProfit = totalRevenue / totalVoyages
+    // Calculer le profit moyen basé sur les calculs réels
+    const totalProfit = data.reduce((sum, voyage) => {
+      if (voyage.calculs) {
+        return sum + voyage.calculs.beneficeNet
+      }
+      return sum
+    }, 0)
+    const averageProfit = totalVoyages > 0 ? totalProfit / totalVoyages : 0
     
     // Trouver la destination la plus fréquente
     const destinations = data.map(v => v.destination).filter(Boolean)

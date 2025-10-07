@@ -48,7 +48,8 @@ const generateRevenueData = (voyages: any[]) => {
     const month = new Date(voyage.date).toLocaleDateString('fr-FR', { month: 'short' })
     const revenue = voyage.marchandises?.reduce((sum: number, marchandise: any) => 
       sum + (marchandise.prixVenteUnitaire * marchandise.quantite), 0) || 0
-    const profit = revenue * 0.3 // Estimation du profit à 30%
+    // Calculer le profit réel basé sur les calculs du voyage
+    const profit = voyage.calculs ? voyage.calculs.beneficeNet : revenue * 0.3
     
     if (!acc[month]) {
       acc[month] = { revenue: 0, profit: 0 }
