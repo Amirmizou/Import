@@ -67,7 +67,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('${getApiBaseUrl()}/voyages', {
+      const response = await fetch(`${getApiBaseUrl()}/voyages`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -101,7 +101,7 @@ export const useVoyages = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('${getApiBaseUrl()}/voyages', {
+      const response = await fetch(`${getApiBaseUrl()}/voyages`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -220,7 +220,7 @@ export const useVoyageStats = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('${getApiBaseUrl()}/voyages/stats', {
+      const response = await fetch(`${getApiBaseUrl()}/voyages/stats`, {
         method: 'GET',
         credentials: 'include',
         headers: {

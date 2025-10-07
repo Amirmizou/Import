@@ -51,6 +51,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      console.log('🔍 Checking authentication...')
+      console.log('🔍 API URL:', getApiBaseUrl())
+      console.log('🔍 Cookies:', document.cookie)
+      
       const response = await fetch(`${getApiBaseUrl()}/auth/me`, {
         method: 'GET',
         credentials: 'include', // Important pour les cookies
@@ -59,14 +63,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         },
       })
 
+      console.log('🔍 Auth response status:', response.status)
+      console.log('🔍 Auth response headers:', Object.fromEntries(response.headers.entries()))
+
       if (response.ok) {
         const data = await response.json()
+        console.log('🔍 Auth response data:', data)
         if (data.success) {
           setUser(data.data)
+          console.log('✅ User authenticated:', data.data.name)
         }
+      } else {
+        console.log('❌ Auth failed with status:', response.status)
+        const errorData = await response.text()
+        console.log('❌ Auth error response:', errorData)
       }
     } catch (error) {
-      console.error('Erreur de vérification auth:', error)
+      console.error('❌ Erreur de vérification auth:', error)
     } finally {
       setLoading(false)
     }
@@ -75,6 +88,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       setLoading(true)
+      console.log('🔍 Attempting login...')
+      console.log('🔍 Login API URL:', getApiBaseUrl())
+      
       const response = await fetch(`${getApiBaseUrl()}/auth/login`, {
         method: 'POST',
         credentials: 'include', // Important pour les cookies
@@ -84,15 +100,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         body: JSON.stringify({ email, password }),
       })
 
+      console.log('🔍 Login response status:', response.status)
+      console.log('🔍 Login response headers:', Object.fromEntries(response.headers.entries()))
+      console.log('🔍 Set-Cookie header:', response.headers.get('set-cookie'))
+
       const data = await response.json()
+      console.log('🔍 Login response data:', data)
 
       if (data.success) {
         setUser(data.data.user)
+        console.log('✅ Login successful, user set:', data.data.user.name)
+        console.log('🔍 Cookies after login:', document.cookie)
       } else {
         throw new Error(data.message || 'Erreur de connexion')
       }
     } catch (error) {
-      console.error('Erreur de connexion:', error)
+      console.error('❌ Erreur de connexion:', error)
       throw error
     } finally {
       setLoading(false)

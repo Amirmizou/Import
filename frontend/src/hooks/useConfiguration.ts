@@ -21,7 +21,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('${getApiBaseUrl()}/configurations', {
+      const response = await fetch(`${getApiBaseUrl()}/configurations`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -50,7 +50,7 @@ export const useConfiguration = () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await fetch('${getApiBaseUrl()}/configurations', {
+      const response = await fetch(`${getApiBaseUrl()}/configurations`, {
         method: 'POST',
         credentials: 'include',
         headers: {
