@@ -33,6 +33,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const isAuthenticated = !!user
 
+  // Fonction utilitaire pour obtenir l'URL de l'API
+  const getApiBaseUrl = () => {
+    if (import.meta.env.PROD) {
+      return 'https://microimport-backend.onrender.com/api'
+    }
+    if (import.meta.env.VITE_API_URL) {
+      return `${import.meta.env.VITE_API_URL}/api`
+    }
+    return 'http://localhost:5000/api'
+  }
+
   // Vérifier l'authentification au chargement
   useEffect(() => {
     checkAuth()
@@ -40,7 +51,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/me', {
+      const response = await fetch(`${getApiBaseUrl()}/auth/me`, {
         method: 'GET',
         credentials: 'include', // Important pour les cookies
         headers: {
@@ -64,7 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`${getApiBaseUrl()}/auth/login`, {
         method: 'POST',
         credentials: 'include', // Important pour les cookies
         headers: {
@@ -91,7 +102,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const register = async (name: string, email: string, password: string, phone?: string, location?: string) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(`${getApiBaseUrl()}/auth/register`, {
         method: 'POST',
         credentials: 'include', // Important pour les cookies
         headers: {
@@ -117,7 +128,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch('http://localhost:5000/api/auth/logout', {
+      await fetch(`${getApiBaseUrl()}/auth/logout`, {
         method: 'POST',
         credentials: 'include', // Important pour les cookies
         headers: {
@@ -134,7 +145,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const updateProfile = async (data: Partial<User>) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/api/auth/profile', {
+      const response = await fetch(`${getApiBaseUrl()}/auth/profile`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
@@ -161,7 +172,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const changePassword = async (currentPassword: string, newPassword: string) => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/api/auth/change-password', {
+      const response = await fetch(`${getApiBaseUrl()}/auth/change-password`, {
         method: 'PUT',
         credentials: 'include',
         headers: {
