@@ -52,6 +52,7 @@ const getAllowedOrigins = () => {
     origins.push(cleanUrl);
   }
   
+  console.log('🌐 CORS Allowed Origins:', origins);
   return origins;
 };
 
@@ -60,7 +61,10 @@ const corsOptions = {
     const allowedOrigins = getAllowedOrigins();
     
     // Permettre les requêtes sans origin (ex: Postman, mobile apps, preflight)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('✅ CORS allowing request without origin');
+      return callback(null, true);
+    }
     
     // Vérifier si l'origin est dans la liste autorisée
     if (allowedOrigins.includes(origin)) {
@@ -69,7 +73,14 @@ const corsOptions = {
     } else {
       console.log('🚫 CORS blocked origin:', origin);
       console.log('📋 Allowed origins:', allowedOrigins);
-      callback(new Error('Not allowed by CORS'));
+      
+      // En mode développement ou si l'origin contient 'render.com', permettre
+      if (process.env.NODE_ENV !== 'production' || origin.includes('render.com')) {
+        console.log('⚠️  CORS allowing origin in dev mode or render.com:', origin);
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
     }
   },
   credentials: true,
@@ -117,6 +128,16 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Cookie parsing middleware
 app.use(cookieParser());
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'MicroImport API is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -183,6 +204,10 @@ const server = app.listen(PORT, () => {
   console.log(`🌐 URL: http://localhost:${PORT}`);
   console.log(`📱 Client URL: ${process.env.CLIENT_URL || 'http://localhost:5173'}`);
   console.log(`🔑 JWT Secret configuré: ${process.env.JWT_SECRET ? 'Oui' : 'Non'}`);
+  console.log(`🗄️  MongoDB URI configuré: ${process.env.MONGODB_URI ? 'Oui' : 'Non'}`);
+  console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'Non défini'}`);
+  console.log(`📋 Allowed Origins:`, getAllowedOrigins());
+  console.log(`✅ Serveur prêt à recevoir des requêtes!`);
 });
 
 // Handle unhandled promise rejections
