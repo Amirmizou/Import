@@ -4,7 +4,7 @@ import axios from 'axios'
 const getApiBaseUrl = () => {
   // Si on est en production (Render), utiliser l'URL de production
   if (import.meta.env.PROD) {
-    return 'https://microimport-backend.onrender.com/api'
+    return 'https://importb.onrender.com/api'
   }
   
   // Si une variable d'environnement est définie, l'utiliser

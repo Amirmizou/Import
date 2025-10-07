@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Fonction utilitaire pour obtenir l'URL de l'API
   const getApiBaseUrl = () => {
     if (import.meta.env.PROD) {
-      return 'https://microimport-backend.onrender.com/api'
+      return 'https://importb.onrender.com/api'
     }
     if (import.meta.env.VITE_API_URL) {
       return `${import.meta.env.VITE_API_URL}/api`

@@ -40,6 +40,7 @@ const getAllowedOrigins = () => {
     'http://localhost:5173',  // Développement local
     'http://localhost:3000',  // Alternative locale
     'https://importf.onrender.com',  // Frontend déployé
+    'https://importb.onrender.com',  // Backend déployé (pour les tests)
   ];
   
   // Ajouter les origines depuis les variables d'environnement
