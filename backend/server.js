@@ -14,7 +14,10 @@ const voyageRoutes = require('./routes/voyages');
 const configurationRoutes = require('./routes/configurations');
 
 // Connect to database
-connectDB();
+connectDB().catch(err => {
+  console.error('❌ Database connection failed:', err.message);
+  console.log('💡 Server will continue without database connection');
+});
 
 const app = express();
 
@@ -77,9 +80,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Handle preflight requests explicitly
-app.options('*', cors(corsOptions));
-
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -120,11 +120,30 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
+// Validate required environment variables
+const requiredEnvVars = ['JWT_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  console.error('❌ Variables d\'environnement manquantes:', missingEnvVars.join(', '));
+  console.error('💡 Configurez ces variables sur Render.com dans les paramètres d\'environnement');
+  
+  // En production, utiliser des valeurs par défaut pour éviter le crash
+  if (process.env.NODE_ENV === 'production') {
+    console.log('⚠️  Mode production: Utilisation de valeurs par défaut');
+    process.env.JWT_SECRET = process.env.JWT_SECRET || 'default_jwt_secret_change_in_production';
+  } else {
+    console.log('🔧 Mode développement: Utilisation de valeurs par défaut');
+    process.env.JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret';
+  }
+}
+
 const server = app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur le port ${PORT}`);
   console.log(`📊 Environnement: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 URL: http://localhost:${PORT}`);
   console.log(`📱 Client URL: ${process.env.CLIENT_URL || 'http://localhost:5173'}`);
+  console.log(`🔑 JWT Secret configuré: ${process.env.JWT_SECRET ? 'Oui' : 'Non'}`);
 });
 
 // Handle unhandled promise rejections
