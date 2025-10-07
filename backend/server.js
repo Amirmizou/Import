@@ -14,8 +14,24 @@ const voyageRoutes = require('./routes/voyages');
 const configurationRoutes = require('./routes/configurations');
 
 // Connect to database
+console.log('🚀 ===== SERVER STARTUP DEBUG =====');
+console.log('📅 Server startup timestamp:', new Date().toISOString());
+console.log('🌍 Environment:', process.env.NODE_ENV || 'development');
+console.log('🔧 Node Version:', process.version);
+console.log('📦 Express Version:', require('express/package.json').version);
+
+console.log('🔍 Environment Variables Check:');
+console.log('  - NODE_ENV:', process.env.NODE_ENV);
+console.log('  - PORT:', process.env.PORT);
+console.log('  - MONGODB_URI exists:', !!process.env.MONGODB_URI);
+console.log('  - JWT_SECRET exists:', !!process.env.JWT_SECRET);
+console.log('  - CORS_ORIGIN:', process.env.CORS_ORIGIN);
+console.log('  - CLIENT_URL:', process.env.CLIENT_URL);
+
+console.log('🔄 Attempting database connection...');
 connectDB().catch(err => {
-  console.error('❌ Database connection failed:', err.message);
+  console.error('❌ Database connection failed in server startup:', err.message);
+  console.error('❌ Error details:', err);
   console.log('💡 Server will continue without database connection');
 });
 
@@ -142,14 +158,43 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const mongoose = require('mongoose');
+  const dbStatus = {
+    connected: mongoose.connection.readyState === 1,
+    readyState: mongoose.connection.readyState,
+    host: mongoose.connection.host || 'N/A',
+    name: mongoose.connection.name || 'N/A',
+    collections: 'N/A'
+  };
+  
+  // Try to get collections count
+  if (mongoose.connection.readyState === 1) {
+    mongoose.connection.db.listCollections().toArray()
+      .then(collections => {
+        dbStatus.collections = collections.length;
+      })
+      .catch(err => {
+        dbStatus.collections = 'Error: ' + err.message;
+      });
+  }
+  
   res.json({
     success: true,
     message: 'MicroImport API is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
+    database: dbStatus,
     cors: {
       origin: req.headers.origin,
       allowedOrigins: getAllowedOrigins()
+    },
+    environment_vars: {
+      NODE_ENV: process.env.NODE_ENV,
+      PORT: process.env.PORT,
+      MONGODB_URI_exists: !!process.env.MONGODB_URI,
+      JWT_SECRET_exists: !!process.env.JWT_SECRET,
+      CORS_ORIGIN: process.env.CORS_ORIGIN,
+      CLIENT_URL: process.env.CLIENT_URL
     }
   });
 });
