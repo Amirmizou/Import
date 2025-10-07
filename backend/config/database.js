@@ -12,11 +12,17 @@ const connectDB = async () => {
     console.error('❌ Database connection error:', error.message);
     console.log('💡 Le serveur démarre sans base de données pour le test');
     console.log('💡 Pour une base complète, configurez MongoDB Atlas ou local');
-    console.log('💡 Voir backend/MONGODB-SETUP.md pour les instructions');
-    // Ne pas arrêter le processus en développement
+    console.log('💡 Voir MONGODB-ATLAS-SETUP.md pour les instructions');
+    
+    // En production, continuer sans base de données pour éviter les crashes
     if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
+      console.log('⚠️  Mode production: Serveur continue sans base de données');
+      console.log('⚠️  Configurez MONGODB_URI sur Render pour activer la base de données');
+      return; // Ne pas arrêter le processus
     }
+    
+    // En développement, continuer aussi
+    console.log('🔧 Mode développement: Serveur continue sans base de données');
   }
 };
 
